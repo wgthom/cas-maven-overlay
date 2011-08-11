@@ -1,0 +1,11 @@
+Local CAS Server via Maven Overlay
+
+This project provides an example Maven Project Object Model (pom.xml) for building and maintaining a local CAS
+Server.
+
+Dependencies
+* Apache Maven 2.2.1 (r801777; 2009-08-06 15:16:01-0400)
+* Java version: 1.6.0_24
+
+Building
+Running mvn clean package will build the cas.war file as specified in the pom.xml file.
