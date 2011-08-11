@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- To upgrade or patch set the <cas.version> to the appropriate release number, and run mvn clean package -->
+     
+    <modelVersion>4.0.0</modelVersion>  <!-- This is the POM version and is required by Maven  -->
+    <groupId>edu.example.cas</groupId>  <!-- groupId of this local cas build -->
+    <artifactId>local-cas</artifactId>  <!-- artifactId of this local cas build -->
+    <version>0.1-SNAPSHOT</version>     <!-- version of this local cas build -->
+    <packaging>war</packaging>          <!-- maven is building a war file -->
+    <name>Local CAS Server via Maven Overlay</name>
+
+    <properties>
+        <!-- The Jasig CAS Version to overlay. -->
+        <cas.version>3.4.9</cas.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- CAS Server version that this build will overlay -->
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp</artifactId>
+            <version>${cas.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- CAS LDAP support for Active Directory Authentication -->
+        <dependency>
+             <groupId>org.jasig.cas</groupId>
+             <artifactId>cas-server-support-ldap</artifactId>
+             <version>${cas.version}</version>
+             <scope>runtime</scope>
+        </dependency>
+
+        <!-- Log4J extras for JPA debug logging -->
+        <dependency>
+           <groupId>log4j</groupId>
+           <artifactId>apache-log4j-extras</artifactId>
+           <version>1.0</version>
+        <scope>runtime</scope>
+        </dependency>
+
+        <!-- Hibernate for JPA Ticket Registry and Service Registry -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.6-Final</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.6-Final</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Database connection pool -->        
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- MySQL JDBC Driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.17</version>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+
+            <!-- Maven config to enable war target and overlay method -->
+            <!-- see: http://maven.apache.org/plugins/maven-war-plugin/ -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <warName>cas</warName>
+                </configuration>
+            </plugin>
+
+            <!-- Enabling and configuring regular resources filtering. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <!-- specify UTF-8, ISO-8859-1 or any other file encoding -->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <repositories>
+        <!-- Jasig CAS Repository -->     
+        <repository>
+            <id>ja-sig</id>
+            <url>http://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+    </repositories>
+ 
+</project>
